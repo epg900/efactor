@@ -25,6 +25,30 @@ body {
   min-height: 75rem;
   padding-top: 4.5rem;
 }
+
+.farvahar {
+  background: url(/static/farv.png) no-repeat center left;
+  height: 100px;
+  width: 200px;
+  -webkit-animation: farvahar 6s infinite linear;
+  animation: farvahar 4s infinite linear;
+  z-index: 1;
+}
+@-webkit-keyframes farvahar {
+	0%, 40%, 100% {-webkit-transform: scale(1);transform: scale(1);}
+	20% {-webkit-transform: scale(.6);transform: scale(.6);}
+	45% {-webkit-transform: scale(.75);transform: scale(.75);}
+	90% {-webkit-transform: scale(.9);transform: scale(.9);}	 
+   } 
+     
+	@keyframes farvahar {
+    0%, 40%, 100% {-webkit-transform: scale(1);transform: scale(1);}
+	20% {-webkit-transform: scale(.6);transform: scale(.6);}
+	45% {-webkit-transform: scale(.75);transform: scale(.75);}
+	90% {-webkit-transform: scale(.9);transform: scale(.9);}	
+   }       
+
+
 a {
   text-decoration: none;
 }
@@ -39,10 +63,8 @@ a {
 .modal-body img {
   object-fit: contain;
 }
-</style>
-
-    
-    <!-- Custom styles for this template -->
+</style>   
+   
     
   </head>
 <body id="page-top" class="rtl">
@@ -133,7 +155,6 @@ a {
 					</div>
 				</form>
 				
-			
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped table-hover" id="userTable">
 						<tr>
@@ -153,7 +174,7 @@ a {
 						<td>{{i.consumer_name}}</td>
 						<td>{{i.date}}</td>
 						<td>{{i.barcode}}</td>
-						<td><button class="btn btn-primary"  onclick="window.open('/printfactor?id={{i.id}}&title=فاکتور کالا و خدمات');">چاپ فاکتور</button></td>
+						<td><button class="btn btn-primary"  onclick="loadershow();window.open('/printfactor?id={{i.id}}&title=فاکتور کالا و خدمات','_self');">چاپ فاکتور</button></td>
 						<td><button class="btn btn-primary"   onclick="window.open('/editfactor?id={{i.id}}','_self');">ویرایش</button></td>
 						<td><button class="btn btn-danger"   onclick="window.open('/delfactor?id={{i.id}}','_self');">پاک شود</button></td>
 						</tr>
@@ -206,7 +227,7 @@ a {
 					</table>
 				</div>
 				
-				<button class="btn btn-primary"  onclick="window.open('/printfactor?id={{idx}}&title=فاکتور کالا و خدمات');">نمایش فاکتور</button>
+				<button class="btn btn-primary"  onclick="loadershow();window.open('/printfactor?id={{idx}}&title=فاکتور کالا و خدمات','_self');">نمایش فاکتور</button>
 				
 				{% elif var1 == 7 %}
 					<form  class="row" id="login" method="post" enctype="multipart/form-data" action="/uploadtpl/" >
@@ -266,9 +287,9 @@ a {
       </div>
     </div>
     <!-- Modal 2  {backdrop:'static', keyboard: false , show: true } -->
-    <div class="modal bottom fade" tabindex="-1"  id="loader" data-backdrop="static" data-keyboard="false">
+    <div class="modal bottom fade" tabindex="-1"  id="loader" name="loader"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-frame modal-bottom text-center">
-            <span class="ball-loader"></span>
+            <div class="farvahar"></div>
         </div>
     </div>
 	<!-- Modal 3 -->
@@ -301,16 +322,16 @@ a {
 	}		
 	
 	function jax(){
-		let response = await fetch('/uploadfiles/', {
+		let response =  fetch('/uploadfiles/', {
 		method: 'POST',
 		body: fd
 		//headers: {"Content-Type": "multipart/form-data"}
 		}).then(response => {
 			window.location.reload();
 		})
-		await console.log(response);
-		}
+		console.log(response);
 	}
+	
 	function sortTable(z) {
 	  var table, rows, switching, i, x, y, shouldSwitch;
 	  table = document.getElementById("userTable");

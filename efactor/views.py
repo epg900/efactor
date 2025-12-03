@@ -117,7 +117,7 @@ def printfactor(request):
 				idx = request.GET['id']
 				title = request.GET['title']
 				factor_data=Factor.objects.get(id = idx)
-				product=Productlst.objects.filter(factor_id = idx)
+				product=Productlst.objects.filter(factor_id = factor_data)
 		price = 0
 		for u in product:
 				price += int(u.obj_name.fee) * int(u.number)
@@ -129,11 +129,19 @@ def printfactor(request):
 				os.system("docx2pdf {}".format('aa.docx'))
 		if platform.system() == "Linux":
 				os.system("sudo lowriter --convert-to pdf  {}".format("aa.docx"))
-		f = open("aa.pdf", 'rb')
-		pdf_contents = f.read()
-		f.close()
-		response = HttpResponse(pdf_contents, content_type='application/pdf')
-		return response
+		if os.path.exists('aa.pdf'):
+			f = open("aa.pdf", 'rb')
+			pdf_contents = f.read()
+			f.close()
+			response = HttpResponse(pdf_contents, content_type='application/pdf')
+			return response
+		else:
+			f = open("aa.docx", 'rb')
+			pdf_contents = f.read()
+			f.close()
+			response = HttpResponse(pdf_contents, content_type='application/octet-stream')
+			response['Content-Disposition'] = 'attachment; filename=download.docx'
+			return response
 	except:
 		pass
 	return redirect("/")
@@ -159,11 +167,19 @@ def printfactorbarcode(request):
 				os.system("docx2pdf {}".format('aa.docx'))
 		if platform.system() == "Linux":
 				os.system("sudo lowriter --convert-to pdf  {}".format("aa.docx"))
-		f = open("aa.pdf", 'rb')
-		pdf_contents = f.read()
-		f.close()
-		response = HttpResponse(pdf_contents, content_type='application/pdf')
-		return response
+		if os.path.exists('aa.pdf'):
+			f = open("aa.pdf", 'rb')
+			pdf_contents = f.read()
+			f.close()
+			response = HttpResponse(pdf_contents, content_type='application/pdf')
+			return response
+		else:
+			f = open("aa.docx", 'rb')
+			pdf_contents = f.read()
+			f.close()
+			response = HttpResponse(pdf_contents, content_type='application/octet-stream')
+			response['Content-Disposition'] = 'attachment; filename=download.docx'
+			return response
 	except:
 		pass
 	return redirect("/")
