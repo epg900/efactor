@@ -14,7 +14,17 @@ class Productlst_form(forms.ModelForm):
         model = Productlst
         fields = ['obj_name','number','factor_id']
         
-
+class Customer_form(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = "__all__"
         
+class Seller_form(forms.ModelForm):
+    class Meta:
+        model = Seller
+        fields = "__all__"
 
-
+class Product_form(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"

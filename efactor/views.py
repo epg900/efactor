@@ -8,7 +8,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import os,random,json,base64
-from .forms import Factor_form, Productlst_form
+from .forms import Factor_form, Productlst_form, Customer_form, Seller_form, Product_form
 from .models import Factor, Productlst
 from docxtpl import DocxTemplate
 from docxtpl import InlineImage
@@ -70,12 +70,12 @@ def changepass(request):
 					#instance.save()
 					form.save()
 					update_session_auth_hash(request, form.user)
-					return render(request, 'erscipcard/ou.html', {'memo':'گذرواژه شما با موفقیت تغییر یافت', 'var1' : 1 })
+					return render(request, 'efactor/ou.html', {'memo':'گذرواژه شما با موفقیت تغییر یافت', 'var1' : 1 })
 				else:
-					return render(request, 'erscipcard/ou.html', {'memo':'خطا در تغییر گذرواژه', 'var1': 1 })
+					return render(request, 'efactor/ou.html', {'memo':'خطا در تغییر گذرواژه', 'var1': 1 })
 		else:
 					form = PasswordChangeForm(request.user)
-					return render(request, 'erscipcard/ou.html', {'form': form ,  'dest' : 'changepass' ,'idx' : 1 , 'var1' : 2  })
+					return render(request, 'efactor/ou.html', {'form': form ,  'dest' : 'changepass' ,'idx' : 1 , 'var1' : 2  })
 	except:
 		pass
 	return redirect("/")
@@ -196,6 +196,54 @@ def factorlist(request):
 	        data = ""
 	        objlst=Factor.objects.all().order_by('id')
 	        return render(request, 'efactor/ou.html', {'data': data , 'objlst' : objlst , 'var1' : 3 })
+	except:
+		pass
+	return redirect("/")
+####################################################################
+def addcustomer(request):
+	if not request.user.is_authenticated:
+		return render (request,'efactor/login.html' )
+	try:
+		if request.method == 'POST':
+			form = Customer_form(request.POST)
+			if form.is_valid():
+				form.save()
+			return redirect("/addcustomer")
+		else:
+			form = Customer_form()
+			return render(request, 'efactor/ou.html', {'form': form , 'dest' : 'addcustomer', 'var1' : 2  })
+	except:
+		pass
+	return redirect("/")
+####################################################################
+def addseller(request):
+	if not request.user.is_authenticated:
+		return render (request,'efactor/login.html' )
+	try:
+		if request.method == 'POST':
+			form = Seller_form(request.POST)
+			if form.is_valid():
+				form.save()
+			return redirect("/addseller")
+		else:
+			form = Seller_form()
+			return render(request, 'efactor/ou.html', {'form': form , 'dest' : 'addseller', 'var1' : 2  })
+	except:
+		pass
+	return redirect("/")
+####################################################################
+def addproduct(request):
+	if not request.user.is_authenticated:
+		return render (request,'efactor/login.html' )
+	try:
+		if request.method == 'POST':
+			form = Product_form(request.POST)
+			if form.is_valid():
+				form.save()
+			return redirect("/addproduct")
+		else:
+			form = Product_form()
+			return render(request, 'efactor/ou.html', {'form': form , 'dest' : 'addproduct', 'var1' : 2  })
 	except:
 		pass
 	return redirect("/")

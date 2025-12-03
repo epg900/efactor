@@ -6,18 +6,12 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <title>سامانه صدور فاکتور</title>
-
-    
+    <title>سامانه صدور فاکتور</title>   
 
     <!-- Bootstrap core CSS -->
-<link href="{% static 'bt/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'bt/css/bootstrap.min.5.0.css' %}" rel="stylesheet">
 <link href="{% static 'bt/css/style.css' %}" rel="stylesheet">
-<link href="{% static 'bt/css/font-awesome.min.css' %}" rel="stylesheet">
-<link href="{% static 'spinners.css' %}" rel="stylesheet">
-<!--//# sourceMappingURL=bootstrap.bundle.min.js.map -->
 
-	 <!-- Favicons  -->
 <link rel="icon" href="{% static 'bt/pics/favicon.ico' %}">
 
     <style>
@@ -48,10 +42,10 @@ body {
 	90% {-webkit-transform: scale(.9);transform: scale(.9);}	
    }       
 
-
-a {
-  text-decoration: none;
+header .navbar-default ul.navbar-nav li a:hover:after {
+    background-color: transparent;
 }
+
 .modal-dialog {
   max-width: max-content !important;
 }
@@ -71,33 +65,34 @@ a {
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark " id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="{% static 'bt/pics/logo.png' %}" alt="" height="36"> <span> سامانه صدور کارت </span> </a>
+			<a class="navbar-brand js-scroll-trigger text-decoration-none" href="#page-top"><img src="{% static 'bt/pics/logo.png' %}" alt="" height="36"> <span> سامانه فاکتور </span> </a>
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				{% if request.user.is_authenticated %}
 				<ul class="navbar-nav ml-auto my-2 my-lg-0">
-				    <li class="nav-item">
+				    <li class="nav-item text-decoration-none">
 						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/makefactor','_self');">ساخت فاکتور</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/factorlist','_self');">لیست فاکتور</a>
 					</li>
-					 <li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						کاربردها
-						</a>
-					  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-					    <li> <a class="dropdown-item " href="#" onclick="loadershow();window.open('/printcard','_self');"  >چاپ تمام کارتها</a>	    </li>
-					    <li> <a class="dropdown-item " href="#" onclick="$('#cardpn').modal('show');"  >چاپ یک یا چند کارت</a>	    </li>
-					    <li> <a class="dropdown-item " href="#" onclick="loadershow();window.open('/printalluser','_self');"  > چاپ لیست پرسنل</a>	    </li>
-					    <li><hr class="dropdown-divider"></li>
-						<li> <a class="dropdown-item " href="{% static '/1.docx' %}">دانلود فایل نمونه پرینت کارت</a>	    </li>
-					    <li> <a class="dropdown-item " href="{% static '/2.docx' %}">دانلود فایل نمونه کاربران</a>	    </li>
-						<li> <a class="dropdown-item " href="#" onclick="loadershow();window.open('/uploadtpl','_self');">آپلود فایل نمونه</a>	    </li>
-					  </ul>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/addcustomer','_self');">افزودن مشتری</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/addproduct','_self');">افزودن کالا</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/addseller','_self');">افزودن فروشنده</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="{% static '/1.docx' %}">دانلود فایل نمونه پرینت کارت</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#" onclick="loadershow();window.open('/uploadtpl','_self');">آپلود فایل نمونه</a>
+					</li>					 
 				</ul>
 				<ul class="navbar-nav me-auto ">
 					<li class="nav-item dropdown">
@@ -123,7 +118,7 @@ a {
 				{% if var1 == 1 %}
 					<div class="col-lg-8 align-self-baseline">
 						<p class="text-white-75 font-weight-light mb-5">{{ memo }} </p>
-						<a class="btn btn-primary btn-xl js-scroll-trigger" href="#" onclick="loadershow();window.open('/','_self');"> بازگشت </a>
+						<a class="btn btn-primary btn-l js-scroll-trigger" href="#" onclick="loadershow();window.open('/','_self');"> بازگشت </a>
 					</div>
 				{% elif var1 == 2 %}
 				<form  class="row" id="login" method="post" enctype="multipart/form-data" action="/{{dest}}/" >
@@ -138,12 +133,12 @@ a {
 							</div>
 							{% endfor %}
 					<div class="col-12 mb-3">
-					    <button class="btn btn-primary btn-xl ">ذخیره</button>
+					    <button class="btn btn-primary btn-l ">ذخیره</button>
                     </div>
 				</form>
 				{% elif var1 == 3 %}
 				
-				<form  class="mb-3" id="login" method="post"  enctype="multipart/form-data" action="/userlist/" >
+				<form  class="mb-3" id="login" method="post"  enctype="multipart/form-data" action="/factorlist/" >
 					{% csrf_token %}
 					<div class="input-group">
 						<div class="col-sm-2">
@@ -171,12 +166,12 @@ a {
 						<tr>
 						<td>{{i.id}}</td>
 						<td>{{i.seller_name}}</td>
-						<td>{{i.consumer_name}}</td>
+						<td>{{i.customer_name}}</td>
 						<td>{{i.date}}</td>
 						<td>{{i.barcode}}</td>
 						<td><button class="btn btn-primary"  onclick="loadershow();window.open('/printfactor?id={{i.id}}&title=فاکتور کالا و خدمات','_self');">چاپ فاکتور</button></td>
-						<td><button class="btn btn-primary"   onclick="window.open('/editfactor?id={{i.id}}','_self');">ویرایش</button></td>
-						<td><button class="btn btn-danger"   onclick="window.open('/delfactor?id={{i.id}}','_self');">پاک شود</button></td>
+						<td><button class="btn btn-primary"   onclick="loadershow();window.open('/editfactor?id={{i.id}}','_self');">ویرایش</button></td>
+						<td><button class="btn btn-danger"   onclick="loadershow();window.open('/delfactor?id={{i.id}}','_self');">پاک شود</button></td>
 						</tr>
 						{% endfor %}
 					</table>
@@ -221,7 +216,7 @@ a {
 						<td>{{forloop.counter}}</td>
 						<td>{{i.obj_name}}</td>
 						<td>{{i.number}}</td>
-						<td><button class="btn btn-danger"  onclick="window.open('/delobj?id={{i.id}}','_self');">پاک شود</button></td>
+						<td><button class="btn btn-danger"  onclick="loadershow();window.open('/delobj?id={{i.id}}','_self');">پاک شود</button></td>
 						</tr>
 						{% endfor %}
 					</table>
@@ -237,78 +232,33 @@ a {
 							<input type="file" name="file" id="file"  />
 				    </div>
 					<div class="col-12 mb-3">
-				            <label for="file2">آپلود فایل نمونه لیست کاربران:</label> 
-							<input type="file" name="file2" id="file2"  />
-				    </div>
-					<div class="col-12 mb-3">
-					    <button class="btn btn-primary btn-xl ">آپلود</button>
+					    <button class="btn btn-primary btn-l ">آپلود</button>
                     </div>
 				</form>
 				{% endif %}
 				{% else %}
                 <div class="col-lg-12 align-self-end">
 					<h1 id='ajaxctl' class="text-uppercase text-white font-weight-bold">خوش آمدید   </h1>
-					<a class="btn btn-primary btn-xl js-scroll-trigger" href="#" onclick="loadershow();window.open('/efactor/signin','_self');">وارد شوید</a>				    
+					<a class="btn btn-primary btn-l js-scroll-trigger" href="#" onclick="loadershow();window.open('/efactor/signin','_self');">وارد شوید</a>				    
 				</div>
 				{% endif %}
 		</div>
 	</main>
 
 	{% if request.user.is_authenticated %}
-    <!-- Modal -->
-    <div class="modal bottom fade" id="cardpn" tabindex="-1" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-frame modal-bottom ">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">چاپ یک یا چند کارت</h5>            
-          </div>
-          <div class="modal-body">
-			<form  id="login" method="GET" enctype="multipart/form-data" action="/printcard2/" >
-				{% csrf_token %}
-				<div class="col-md-12 mb-3" >
-					<input type="input" class="form-control" name="fromprn" id="fromprn"  />
-				</div>
-				<div class="col-md-12 mb-3" >
-					<input type="input" class="form-control" name="toprn" id="toprn"  />
-				</div>
-				<div class="col-md-12 mb-3" >
-                    <input type="radio" id="wordfile" name="ftype" value="2"/>
-                    <label for="wordfile">فایل Word</label>
-                    <input type="radio" id="pdffile" name="ftype" value="1"/>
-                    <label for="pdffile">فایل Pdf</label>
-                </div>
-				<div class="col-md-12 mb-3" >
-					<input type="submit" class="btn btn-primary ml-3"   value="ارسال" />
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
-				</div>
-			</form>
-		  </div>
-        </div>
-      </div>
-    </div>
+    
     <!-- Modal 2  {backdrop:'static', keyboard: false , show: true } -->
     <div class="modal bottom fade" tabindex="-1"  id="loader" name="loader"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-frame modal-bottom text-center">
             <div class="farvahar"></div>
         </div>
-    </div>
-	<!-- Modal 3 -->
-    <div class="modal modal-dialog-scrollable  bottom fade" id="canvasshowpic" tabindex="-1" data-backdrop="static" data-keyboard="false">
-      <div class="modal-dialog modal-frame modal-bottom ">
-        <div class="modal-content">
-          <div class="modal-body">
-			<img id="showpicimg" width="200px" src="" />
-		  </div>
-        </div>
-      </div>
-    </div>
+    </div>	
 	{% endif %}
 
     <!--Bootstrap core JavaScript -->
 	<script src="{% static 'bt/js/jquery.min.js' %}"></script>
-    <script src="{% static 'bt/js/bootstrap.bundle.min.js' %}"></script>
-	{{ form.media }}
-      
+    <script src="{% static 'bt/js/bootstrap.bundle.min.js' %}"></script>	
+    {{ form.media }}  
     
     <script>        
     document.querySelectorAll('form').forEach(form => form.addEventListener('submit', loadershow));
@@ -319,7 +269,7 @@ a {
     }
     function loaderhide () {
         $('#loader').modal('hide');    
-	}		
+	}	
 	
 	function jax(){
 		let response =  fetch('/uploadfiles/', {
