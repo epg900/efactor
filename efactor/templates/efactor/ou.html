@@ -35,7 +35,7 @@ body {
 	90% {-webkit-transform: scale(.9);transform: scale(.9);}	 
    } 
      
-	@keyframes farvahar {
+@keyframes farvahar {
     0%, 40%, 100% {-webkit-transform: scale(1);transform: scale(1);}
 	20% {-webkit-transform: scale(.6);transform: scale(.6);}
 	45% {-webkit-transform: scale(.75);transform: scale(.75);}
@@ -161,7 +161,7 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 						<th></th>
 						<th></th>
 						<th></th>
-						</tr>
+						</tr>						
 						{% for i in objlst %}
 						<tr>
 						<td>{{i.id}}</td>
@@ -210,15 +210,24 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 						<th> ردیف </th>						
 						<th> نام کالا </th>
 						<th> تعداد </th>
+						<th> فی </th>
+						<th> قیمت </th>
+						<th></th>
 						</tr>
-						{% for i in obj %}
+						{% for i in obj %}	
 						<tr>
 						<td>{{forloop.counter}}</td>
 						<td>{{i.obj_name}}</td>
 						<td>{{i.number}}</td>
+						<td>{{i.obj_name.fee}}</td>
+						<td>{{i.mul}}</td>
 						<td><button class="btn btn-danger"  onclick="loadershow();window.open('/delobj?id={{i.id}}','_self');">پاک شود</button></td>
 						</tr>
 						{% endfor %}
+						<tr>
+						<td colspan=5 >مجموع</td>
+						<td>{{sum}}</td>
+						</tr>						
 					</table>
 				</div>
 				

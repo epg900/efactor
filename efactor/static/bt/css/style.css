@@ -25,7 +25,7 @@ html {
     font-size: 18px;
 }
 
-header .navbar-default ul.navbar-nav li a:hover:after {
+header .nav-link .navbar-default ul.navbar-nav li a:hover:after {
     background-color: transparent;
     text-decoration: none;
 }
@@ -92,16 +92,17 @@ hr.light {
     font-weight: 600;
     font-size: 0.9rem;
     padding: 0.75rem 0;
-text-decoration: none;
-    
+    text-decoration: none;    
 }
 
 #mainNav .navbar-nav .nav-item .nav-link:hover, #mainNav .navbar-nav .nav-item .nav-link:active {
     color: #f4623a;
+    text-decoration: none; 
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active {
     color: #f4623a !important;
+    text-decoration: none; 
 }
 
 @media (min-width: 992px) {
@@ -122,15 +123,18 @@ text-decoration: none;
     #mainNav .navbar-nav .nav-item .nav-link {
         color: rgba(255, 255, 255, 0.7);
         padding: 0 1rem;
+    text-decoration: none; 
     }
 
     #mainNav .navbar-nav .nav-item .nav-link:hover {
         color: #fff;
+    text-decoration: none; 
     }
 
     #mainNav .navbar-nav .dropdown .dropdown-toggle {
         color: rgba(255, 255, 255, 0.7);
         padding: 0 1rem;
+    text-decoration: none; 
     }
 
     #mainNav .navbar-nav .dropdown .dropdown-toggle:hover {
@@ -139,6 +143,7 @@ text-decoration: none;
 
     #mainNav .navbar-nav .nav-item:last-child .nav-link {
         padding-left: 0;
+    text-decoration: none; 
     }
 
     #mainNav.navbar-scrolled {
@@ -157,18 +162,22 @@ text-decoration: none;
 
     #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
         color: #212529;
+    text-decoration: none; 
     }
 
     #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
         color: #f4623a;
+    text-decoration: none; 
     }
 
     #mainNav.navbar-scrolled .navbar-nav .dropdown .dropdown-toggle {
         color: #212529;
+    text-decoration: none; 
     }
 
     #mainNav.navbar-scrolled .navbar-nav .dropdown .dropdown-toggle:hover {
         color: #f4623a;
+    text-decoration: none; 
     }
 
 }

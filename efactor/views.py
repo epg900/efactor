@@ -27,10 +27,10 @@ if platform.system() == "Windows":
 def index(request):
 	if not request.user.is_authenticated:
 		return render (request,'efactor/login.html' )
-	try:		
-		return render(request, 'efactor/ou.html')
-	except:
-		raise Http404("Not Found")
+	#try:		
+	return render(request, 'efactor/ou.html')
+	#except:
+	#	raise Http404("Not Found")
 ####################################################################
 def logout_form(request):
 	try:
@@ -95,7 +95,10 @@ def makefactor(request):
 				form2.save()
 			factor = Factor.objects.get(id = idx)
 			obj = Productlst.objects.filter(factor_id=factor)
-			return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , 'var1' : 4  })		
+			price = 0
+			for u in obj:
+				price += u.mul()
+			return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , "sum" : price , 'var1' : 4  })		
 		else:
 			factor = Factor()
 			factor.save()
@@ -103,7 +106,10 @@ def makefactor(request):
 			form = Factor_form(instance = factor)
 			form2 = Productlst_form(initial={'factor_id' : factor})
 			obj = Productlst.objects.filter(factor_id=factor)
-			return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , 'var1' : 4  })
+			price = 0
+			for u in obj:
+				price += u.mul()
+			return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , "sum" : price , 'var1' : 4  })
 	except:
 		pass
 	return redirect("/")
@@ -120,7 +126,7 @@ def printfactor(request):
 				product=Productlst.objects.filter(factor_id = factor_data)
 		price = 0
 		for u in product:
-				price += int(u.obj_name.fee) * int(u.number)
+				price += u.mul()
 		context = {"data" : factor_data , "factor" : product , "sum" : price , "title" : title}
 		doc.render(context)
 		doc.save("aa.docx")
@@ -158,7 +164,7 @@ def printfactorbarcode(request):
 			product=Productlst.objects.filter(factor_id = factor)
 		price = 0
 		for u in product:
-				price += int(u.obj_name.fee) * int(u.number)
+				price += u.mul()
 		context = {"data" : factor_data , "factor" : product , "sum" : price , "title" : title}
 		doc.render(context)
 		doc.save("aa.docx")
@@ -257,7 +263,10 @@ def editfactor(request):
 		form = Factor_form(instance = factor)
 		form2 = Productlst_form(initial={'factor_id' : factor})
 		obj = Productlst.objects.filter(factor_id=factor)
-		return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , 'var1' : 4  })	
+		price = 0
+		for u in obj:
+			price += u.mul()		
+		return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , "sum" : price , 'var1' : 4  })	
 	except:
 	    return redirect("/")
 	return redirect("/")
@@ -285,7 +294,10 @@ def delobj(request):
 			form = Factor_form(instance = factor)
 			form2 = Productlst_form(initial={'factor_id' : factor})
 			obj = Productlst.objects.filter(factor_id=factor)
-			return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , 'var1' : 4  })	
+			price = 0
+			for u in obj:
+				price += u.mul()	
+			return render(request, 'efactor/ou.html', {'form': form , 'form2' : form2 ,   'dest' : 'makefactor' , 'factor' : factor , 'obj' : obj , 'idx' : factor.id , "sum" : price , 'var1' : 4  })	
 	except:
 		pass
 	return redirect("/")

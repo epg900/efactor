@@ -46,6 +46,8 @@ class Productlst(models.Model):
     obj_name = models.ForeignKey(Product, on_delete=models.CASCADE,verbose_name='نام کالا')
     factor_id = models.ForeignKey(Factor, on_delete=models.CASCADE,verbose_name='شماره فاکتور')
     number = models.IntegerField(verbose_name='تعداد')
+    def mul(self):
+        return self.obj_name.fee * self.number    
     def __str__(self):
 	    return self.factor_name.barcode
 
