@@ -117,39 +117,39 @@ def makefactor(request):
 def printfactor(request):
 	if not request.user.is_authenticated:
 		return render (request,'efactor/login.html' )
-	try:                
-		doc=DocxTemplate("1.docx") if os.path.isfile("1.docx") else DocxTemplate(finders.find("1.docx"))
-		if request.method == 'GET':        
-				idx = request.GET['id']
-				title = request.GET['title']
-				factor_data=Factor.objects.get(id = idx)
-				product=Productlst.objects.filter(factor_id = factor_data)
-		price = 0
-		for u in product:
-				price += u.mul()
-		context = {"data" : factor_data , "factor" : product , "sum" : price , "title" : title}
-		doc.render(context)
-		doc.save("aa.docx")
-		del doc
-		if platform.system() == "Windows":
-				os.system("docx2pdf {}".format('aa.docx'))
-		if platform.system() == "Linux":
-				os.system("sudo lowriter --convert-to pdf  {}".format("aa.docx"))
-		if os.path.exists('aa.pdf'):
-			f = open("aa.pdf", 'rb')
-			pdf_contents = f.read()
-			f.close()
-			response = HttpResponse(pdf_contents, content_type='application/pdf')
-			return response
-		else:
-			f = open("aa.docx", 'rb')
-			pdf_contents = f.read()
-			f.close()
-			response = HttpResponse(pdf_contents, content_type='application/octet-stream')
-			response['Content-Disposition'] = 'attachment; filename=download.docx'
-			return response
-	except:
-		pass
+	#try:                
+	doc=DocxTemplate("1.docx") if os.path.isfile("1.docx") else DocxTemplate(finders.find("1.docx"))
+	if request.method == 'GET':        
+			idx = request.GET['id']
+			title = request.GET['title']
+			factor_data=Factor.objects.get(id = idx)
+			product=Productlst.objects.filter(factor_id = factor_data)
+	price = 0
+	for u in product:
+			price += u.mul()
+	context = {"data" : factor_data , "factor" : product , "sum" : price , "title" : title}
+	doc.render(context)
+	doc.save("aa.docx")
+	del doc
+	if platform.system() == "Windows":
+			os.system(f'docx2pdf aa.docx')
+	if platform.system() == "Linux":
+			os.system("sudo lowriter --convert-to pdf  {}".format("aa.docx"))
+	if os.path.exists('aa.pdf'):
+		f = open("aa.pdf", 'rb')
+		pdf_contents = f.read()
+		f.close()
+		response = HttpResponse(pdf_contents, content_type='application/pdf')
+		return response
+	else:
+		f = open("aa.docx", 'rb')
+		pdf_contents = f.read()
+		f.close()
+		response = HttpResponse(pdf_contents, content_type='application/octet-stream')
+		response['Content-Disposition'] = 'attachment; filename=download.docx'
+		return response
+	#except:
+	#	pass
 	return redirect("/")
 ####################################################################
 def printfactorbarcode(request):
@@ -170,7 +170,7 @@ def printfactorbarcode(request):
 		doc.save("aa.docx")
 		del doc
 		if platform.system() == "Windows":
-				os.system("docx2pdf {}".format('aa.docx'))
+				os.system(f'docx2pdf aa.docx')
 		if platform.system() == "Linux":
 				os.system("sudo lowriter --convert-to pdf  {}".format("aa.docx"))
 		if os.path.exists('aa.pdf'):
@@ -194,14 +194,14 @@ def factorlist(request):
 	if not request.user.is_authenticated:
 		return render (request,'efactor/login.html' )
 	try:
-	    if request.method == 'POST':
-	        data = request.POST['idnum']
-	        objlst=Factor.objects.filter(name__contains = data ).order_by('id')
-	        return render(request, 'efactor/ou.html', {'data': data , 'objlst' : objlst , 'var1' : 3 })
-	    else:
-	        data = ""
-	        objlst=Factor.objects.all().order_by('id')
-	        return render(request, 'efactor/ou.html', {'data': data , 'objlst' : objlst , 'var1' : 3 })
+		if request.method == 'POST':
+			data = request.POST['idnum']
+			objlst=Factor.objects.filter(customer_name__name__contains = data ).order_by('id')
+			return render(request, 'efactor/ou.html', {'data': data , 'objlst' : objlst , 'var1' : 3 })
+		else:
+			data = ""
+			objlst=Factor.objects.all().order_by('id')
+			return render(request, 'efactor/ou.html', {'data': data , 'objlst' : objlst , 'var1' : 3 })
 	except:
 		pass
 	return redirect("/")

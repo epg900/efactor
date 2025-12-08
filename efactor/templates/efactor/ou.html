@@ -188,8 +188,11 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 							</div>
 							<div class="col-md-2 mb-3" >
 								{{ field}}
+								{% if forloop.counter == 2 %}
+								<button class="btn btn-success  btn-s"   onclick="window.open('/addcustomer');"> + </button>
+								{% endif %}
 							</div>
-							{% endfor %}					
+							{% endfor %}													
 							{% for field in form2 %}
 					        <div class="col-md-2 mb-3" >
 								{{ field.label_tag }}
@@ -201,8 +204,7 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 					<div class="col-12 mb-3">
 					    <button class="btn btn-primary btn-l "> افزودن کالا</button>
                     </div>
-				</form>		
-				
+				</form>						
 				
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped table-hover" id="userTable">
@@ -255,7 +257,12 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 	</main>
 
 	{% if request.user.is_authenticated %}
-    
+     <!-- Modal 1  {backdrop:'static', keyboard: false , show: true } -->
+    <div class="modal bottom fade" tabindex="-1"  id="customer" name="customer"  data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-frame modal-bottom text-center">
+            <div id="id_customer"></div>			
+        </div>
+    </div>	
     <!-- Modal 2  {backdrop:'static', keyboard: false , show: true } -->
     <div class="modal bottom fade" tabindex="-1"  id="loader" name="loader"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-frame modal-bottom text-center">
@@ -279,18 +286,7 @@ header .navbar-default ul.navbar-nav li a:hover:after {
     function loaderhide () {
         $('#loader').modal('hide');    
 	}	
-	
-	function jax(){
-		let response =  fetch('/uploadfiles/', {
-		method: 'POST',
-		body: fd
-		//headers: {"Content-Type": "multipart/form-data"}
-		}).then(response => {
-			window.location.reload();
-		})
-		console.log(response);
-	}
-	
+		
 	function sortTable(z) {
 	  var table, rows, switching, i, x, y, shouldSwitch;
 	  table = document.getElementById("userTable");

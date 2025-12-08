@@ -16,8 +16,8 @@ def random_string():
     return str(random.randint(10000000000000, 99999999999999))
 
 class Product(models.Model):
-    name = models.CharField(max_length=100 ,verbose_name='نام کالا')
-    fee = models.IntegerField(verbose_name='في')
+    name = models.CharField(max_length=10000 ,verbose_name='نام کالا')
+    fee = models.BigIntegerField(verbose_name='في')
     def __str__(self):
         return self.name
 
