@@ -167,7 +167,7 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 							<div class="col-md-2 mb-3" >
 								{{ field}}
 								{% if forloop.counter == 2 %}
-								<button class="btn btn-success  btn-s"   onclick="window.open('/addcustomer');"> + </button>
+								<button type="button" class="btn btn-primary" onclick="jax();">+</button>
 								{% endif %}
 							</div>
 							{% endfor %}													
@@ -235,12 +235,50 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 	</main>
 
 	{% if request.user.is_authenticated %}
-     <!-- Modal 1  {backdrop:'static', keyboard: false , show: true } -->
-    <div class="modal bottom fade" tabindex="-1"  id="customer" name="customer"  data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-frame modal-bottom text-center">
-            <div id="id_customer"></div>			
-        </div>
-    </div>	
+    <!-- Modal 1  {backdrop:'static', keyboard: false , show: true } -->
+	<div class="modal fade" tabindex="-1"   id="customer" name="customer"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h1 class="modal-title fs-5" id="exampleModalLabel">افزودن مشتری</h1>			
+		  </div>
+		  <div class="modal-body">
+			
+			<form  class="row" id="f_cust" method="post"  action="" >
+				    {% csrf_token %}
+							<input type="hidden" name="idnum" id="idnum" />
+				            
+					        <div class="col-md-3 mb-3" >
+								<label for="id_name">نام و نام خانوادگی:</label>
+							</div>
+							<div class="col-md-3 mb-3" >
+								<input type="text" name="name" maxlength="100" required id="id_name">
+							</div>
+							
+					        <div class="col-md-3 mb-3" >
+								<label for="id_tel">شماره تلفن:</label>
+							</div>
+							<div class="col-md-3 mb-3" >
+								<input type="text" name="tel" maxlength="10" id="id_tel">
+							</div>
+							
+					        <div class="col-md-3 mb-3" >
+								<label for="id_address">آدرس:</label>
+							</div>
+							<div class="col-md-3 mb-3" >
+								<input type="text" name="address" maxlength="100" id="id_address">
+							</div>
+							
+					<div class="col-12 mb-3">
+					    <button class="btn btn-primary "  >افزودن</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+                    </div>
+				</form>
+			
+		  </div>		  
+		</div>
+	  </div>
+	</div>
     <!-- Modal 2  {backdrop:'static', keyboard: false , show: true } -->
     <div class="modal bottom fade" tabindex="-1"  id="loader" name="loader"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-frame modal-bottom text-center">
@@ -254,17 +292,42 @@ header .navbar-default ul.navbar-nav li a:hover:after {
     <script src="{% static 'bt/js/bootstrap.bundle.min.js' %}"></script>	
     {{ form.media }}  
     
-    <script>        
-    document.querySelectorAll('form').forEach(form => form.addEventListener('submit', loadershow));
+    <script>    
+    
+	//document.querySelectorAll('form').forEach(form => form.addEventListener('submit', loadershow));
     window.addEventListener("unload", loaderhide);
-    document.addEventListener("DOMContentLoaded", loaderhide);
-    function loadershow () {
-        $('#loader').modal('show');
+    document.addEventListener("DOMContentLoaded", loaderhide);	
+	var modal1 = new bootstrap.Modal(document.getElementById('loader'));
+	var modal2 = new bootstrap.Modal(document.getElementById('customer'));
+	
+	function loadershow () {
+        modal1.show();
     }
     function loaderhide () {
-        $('#loader').modal('hide');    
-	}	
-		
+        modal1.hide();   
+	}
+	function jax() {
+	 modal2.show();
+	}
+	
+
+	f_cust.onsubmit = async (e) => {
+    e.preventDefault();
+
+	let response = await fetch('/addcustomer/', {
+		  method: 'POST',
+		  body: new FormData(f_cust)
+		});
+
+    let result = await response.json();
+	var selectElement = document.getElementById('id_customer_name');
+	selectElement.innerHTML = "";
+	for (const a of result.data) { 
+		selectElement.add(new Option(a));
+		}
+	modal2.hide();	
+	};
+	
 	function sortTable(z) {
 	  var table, rows, switching, i, x, y, shouldSwitch;
 	  table = document.getElementById("userTable");

@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 import os,random,json,base64
 from .forms import Factor_form, Productlst_form, Customer_form, Seller_form, Product_form
-from .models import Factor, Productlst
+from .models import Factor, Productlst, Customer
 from docxtpl import DocxTemplate
 from docxtpl import InlineImage
 import platform, random
@@ -209,17 +209,22 @@ def factorlist(request):
 def addcustomer(request):
 	if not request.user.is_authenticated:
 		return render (request,'efactor/login.html' )
-	try:
-		if request.method == 'POST':
-			form = Customer_form(request.POST)
-			if form.is_valid():
-				form.save()
-			return redirect("/addcustomer")
-		else:
-			form = Customer_form()
-			return render(request, 'efactor/ou.html', {'form': form , 'dest' : 'addcustomer', 'var1' : 2  })
-	except:
-		pass
+	#try:
+	if request.method == 'POST':
+		form = Customer_form(request.POST)
+		if form.is_valid():
+			form.save()
+		objlst=Customer.objects.all()
+		objdata = []		
+		for obj in objlst:
+			objdata.append(obj.name)
+		data = { 'data' : objdata }
+		return JsonResponse(data)		
+	else:
+		form = Customer_form()
+		return render(request, 'efactor/ou.html', {'form': form , 'dest' : 'addcustomer', 'var1' : 2  })
+	#except:
+	#	pass
 	return redirect("/")
 ####################################################################
 def addseller(request):
