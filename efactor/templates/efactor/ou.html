@@ -12,14 +12,16 @@
 <link href="{% static 'bt/css/bootstrap.min.5.0.css' %}" rel="stylesheet">
 <link href="{% static 'bt/css/style.css' %}" rel="stylesheet">
 
-<link rel="icon" href="{% static 'bt/pics/favicon.ico' %}">
+<link rel ="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
     <style>
 body {
   min-height: 75rem;
   padding-top: 4.5rem;
 }
-
+.bg-dark {
+  background-color: #555555 !important;
+}
 header .navbar-default ul.navbar-nav li a:hover:after {
     background-color: transparent;
 }
@@ -43,7 +45,7 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 	<!-- Navigation -->
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark " id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger text-decoration-none" href="#page-top"><img src="{% static 'bt/pics/logo.png' %}" alt="" height="36"> <span> سامانه فاکتور </span> </a>
+			<span class="navbar-brand js-scroll-trigger " ><img src="{% static 'bt/pics/logo.png' %}" alt="" height="36"> سامانه فاکتور </span>
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -51,36 +53,36 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 				{% if request.user.is_authenticated %}
 				<ul class="navbar-nav ml-auto my-2 my-lg-0">
 				    <li class="nav-item text-decoration-none">
-						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/makefactor','_self');">ساخت فاکتور</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('/makefactor','_self');">ساخت فاکتور</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/factorlist','_self');">لیست فاکتور</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('/factorlist','_self');">لیست فاکتور</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/addcustomer','_self');">افزودن مشتری</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('/addcustomer','_self');">افزودن مشتری</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/addproduct','_self');">افزودن کالا</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('/addproduct','_self');">افزودن کالا</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#" onclick="window.open('/addseller','_self');">افزودن فروشنده</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('/addseller','_self');">افزودن فروشنده</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="{% static '/1.docx' %}">دانلود فایل نمونه پرینت کارت</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('{% static '/1.docx' %}','_self');" >دانلود فایل نمونه پرینت کارت</button>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link js-scroll-trigger" href="#" onclick="loadershow();window.open('/uploadtpl','_self');">آپلود فایل نمونه</a>
+						<button class="nav-link js-scroll-trigger btn btn-outline-secondary" onclick="window.open('/uploadtpl','_self');">آپلود فایل نمونه</button>
 					</li>					 
 				</ul>
 				<ul class="navbar-nav me-auto ">
 					<li class="nav-item dropdown">
 					  <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						{{request.user.last_name}} <i class="fa fa-user"></i>
+						{{request.user.first_name}} <i class="fa fa-user"></i>
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown2">
-						<li><a class="dropdown-item" href="#" onclick="loadershow();window.open('/changepass','_self');" > تغییر رمز عبور  </a></li>
+						<li><button class="dropdown-item btn btn-outline-secondary" onclick="window.open('/changepass','_self');"> تغییر رمز عبور  </button></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a href="/logout" class="dropdown-item " > خروج  </a></li>
+						<li><button class="dropdown-item btn btn-outline-secondary" onclick="window.open('/logout','_self');"> خروج  </button></li>
 					  </ul>
 					</li>
 				</ul>
@@ -88,9 +90,8 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 			</div>
 		</div>
 	</nav>
-
-	 <main class="container">
-  
+	
+	<main class="container">  
 		<div class="bg-light p-5 rounded">
 				{% if request.user.is_authenticated %}
 				{% if var1 == 1 %}
@@ -319,7 +320,7 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 		  body: new FormData(f_cust)
 		});
 
-    let result = await response.json();
+    let result = await response.json();	
 	var selectElement = document.getElementById('id_customer_name');
 	selectElement.innerHTML = "";
 	for (const a of result.data) { 
@@ -327,6 +328,8 @@ header .navbar-default ul.navbar-nav li a:hover:after {
 		}
 	modal2.hide();	
 	};
+	
+	
 	
 	function sortTable(z) {
 	  var table, rows, switching, i, x, y, shouldSwitch;
